@@ -173,8 +173,8 @@ bun run build
 - `dev`: Start development server
 - `build`: Build for production
 - `start`: Start production server
-- `lint`: Run ESLint
-- `format`: Format code with Prettier
+- `lint`: Run Biome
+- `format`: Format code with Biome
 - `test`: Run unit tests
 
 ### Tech Stack
