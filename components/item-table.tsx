@@ -29,6 +29,7 @@ export default function ItemTable({ rawData }: ItemTableProps) {
       [column]: !prev[column],
     }));
   }
+  const headerStyle = "flex flex-row items-center justify-center";
 
   return (
     <div className="w-full max-w-4xl mx-auto p-2 sm:p-4">
@@ -49,7 +50,7 @@ export default function ItemTable({ rawData }: ItemTableProps) {
           <TableHeader>
             <TableRow>
               <TableHead className="w-12 sm:w-16 text-xs sm:text-sm p-1 sm:p-4">
-                <div className="flex flex-row items-center justify-center">
+                <div className={headerStyle}>
                   Id
                   <SortButton onClick={() => handleOnClick("id")}>
                     <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
@@ -57,13 +58,15 @@ export default function ItemTable({ rawData }: ItemTableProps) {
                 </div>
               </TableHead>
               <TableHead className="w-16 sm:w-20 text-xs sm:text-sm p-1 sm:p-4">
-                Type
-                <SortButton onClick={() => handleOnClick("type")}>
-                  <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
-                </SortButton>
+                <div className={headerStyle}>
+                  Type
+                  <SortButton onClick={() => handleOnClick("type")}>
+                    <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  </SortButton>
+                </div>
               </TableHead>
               <TableHead className="min-w-24 sm:min-w-48 text-xs sm:text-sm p-1 sm:p-4">
-                <div className="flex flex-row items-center">
+                <div className={headerStyle}>
                   Title
                   <SortButton
                     onClick={() => {
@@ -75,7 +78,7 @@ export default function ItemTable({ rawData }: ItemTableProps) {
                 </div>
               </TableHead>
               <TableHead className="w-14 sm:w-20 text-xs sm:text-sm p-1 sm:p-4">
-                <div className="flex flex-row items-center justify-center">
+                <div className={headerStyle}>
                   Kcal
                   <SortButton
                     onClick={() => {

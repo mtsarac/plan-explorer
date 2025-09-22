@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Plan Explorer App",
-  description: "An app to explore plans",
+  description: "An app to explore plans for meals and training.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="max-w-3xl mx-auto">{children}</main>
+          <main className="max-w-4xl mx-auto">{children}</main>
         </ThemeProvider>
       </body>
     </html>
