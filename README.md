@@ -10,7 +10,6 @@ A filterable, sortable table application built with Next.js, TypeScript, and Tai
 - **Sorting**: Click column headers to sort ascending/descending
 - **Detail View**: Hover cards showing detailed item information
 - **Responsive**: Mobile-friendly design with adaptive layouts
-- **Accessibility**: Keyboard navigation and screen reader support
 
 ## 🏗️ Architecture
 
