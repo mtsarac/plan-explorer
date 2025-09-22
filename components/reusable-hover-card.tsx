@@ -31,12 +31,12 @@ export default function ReusableHover(props: HoverCardProps) {
           <TableCell className="text-center text-xs sm:text-sm p-1 sm:p-4 font-bold">
             {kcal}
           </TableCell>
-          <TableCell className="hidden sm:table-cell text-xs sm:text-sm p-1 sm:p-4">
+          <TableCell className="text-xs sm:text-sm p-1 sm:p-4">
             <div className="flex flex-wrap gap-1">
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs"
+                  className="bg-gray-100 text-gray-700 px-1 py-0.5 sm:px-2 sm:py-2 rounded text-xs"
                 >
                   {tag}
                 </span>
@@ -45,7 +45,7 @@ export default function ReusableHover(props: HoverCardProps) {
           </TableCell>
         </TableRow>
       </HoverCardTrigger>
-      <HoverCardContent align="center" side="right" className="w-80">
+      <HoverCardContent align="center" side="bottom" className="w-80">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-gray-500">#{id}</span>
