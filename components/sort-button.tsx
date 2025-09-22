@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import { Button } from "./ui/button";
 
 type SortButtonProps = PropsWithChildren & {
-  onClick?: () => void;
+  onClick: () => void;
 };
 
 export default function SortButton({ children, onClick }: SortButtonProps) {

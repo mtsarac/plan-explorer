@@ -1,9 +1,12 @@
 "use client";
 import { ArrowUpDown } from "lucide-react";
 import { type PropsWithChildren, useState } from "react";
+import { sortData } from "@/lib/actions";
 import type { Item } from "@/lib/data/data";
 import ReusableHover from "./reusable-hover-card";
 import SearchInput from "./search-input";
+import SortButton from "./sort-button";
+import TypeFilter from "./type-filter";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 type ItemTableProps = PropsWithChildren & {
@@ -11,81 +14,79 @@ type ItemTableProps = PropsWithChildren & {
 };
 export default function ItemTable({ rawData }: ItemTableProps) {
   const [sortedData, setSortedData] = useState<Item[]>(rawData);
+  const [currentTypeFilter, setCurrentTypeFilter] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({
     id: true, // true = asc, false = desc
     title: true,
     kcal: true,
   });
 
-  function sortById() {
-    const isAsc = sortOrder.id;
-    const sorted = [...sortedData].sort((a, b) =>
-      isAsc ? a.id - b.id : b.id - a.id,
-    );
-    setSortedData(sorted);
-    setSortOrder({ ...sortOrder, id: !isAsc });
-  }
-
-  function sortByTitle() {
-    const isAsc = sortOrder.title;
-    const sorted = [...sortedData].sort((a, b) =>
-      isAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title),
-    );
-    setSortedData(sorted);
-    setSortOrder({ ...sortOrder, title: !isAsc });
-  }
-
-  function sortByKcal() {
-    const isAsc = sortOrder.kcal;
-    const sorted = [...sortedData].sort((a, b) =>
-      isAsc ? a.kcal - b.kcal : b.kcal - a.kcal,
-    );
-    setSortedData(sorted);
-    setSortOrder({ ...sortOrder, kcal: !isAsc });
+  function handleOnClick(column: keyof Item) {
+    const newSortedData = sortData(column, sortedData, sortOrder[column]);
+    setSortedData(newSortedData);
+    setSortOrder((prev) => ({
+      ...prev,
+      [column]: !prev[column],
+    }));
   }
 
   return (
     <div className="w-full max-w-4xl mx-auto p-2 sm:p-4">
-      <SearchInput rawData={rawData} onFilter={setSortedData} />
+      <TypeFilter
+        rawData={rawData}
+        onFilter={setSortedData}
+        currentFilter={currentTypeFilter}
+        onFilterChange={setCurrentTypeFilter}
+      />
+      <SearchInput
+        rawData={rawData}
+        currentTypeFilter={currentTypeFilter}
+        onFilter={setSortedData}
+      />
 
       <div className="overflow-x-auto rounded-lg border">
         <Table className="w-full">
           <TableHeader>
             <TableRow>
-              <TableHead
-                className="cursor-pointer w-12 sm:w-16 text-xs sm:text-sm p-1 sm:p-4"
-                onClick={sortById}
-              >
+              <TableHead className="w-12 sm:w-16 text-xs sm:text-sm p-1 sm:p-4">
                 <div className="flex flex-row items-center justify-center">
-                  <span className="hidden sm:inline">Id</span>
-                  <span className="sm:hidden">#</span>
-                  <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  Id
+                  <SortButton onClick={() => handleOnClick("id")}>
+                    <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  </SortButton>
                 </div>
               </TableHead>
               <TableHead className="w-16 sm:w-20 text-xs sm:text-sm p-1 sm:p-4">
-                <span className="hidden sm:inline">Type</span>
-                <span className="sm:hidden">T</span>
+                Type
+                <SortButton onClick={() => handleOnClick("type")}>
+                  <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                </SortButton>
               </TableHead>
-              <TableHead
-                className="cursor-pointer min-w-24 sm:min-w-48 text-xs sm:text-sm p-1 sm:p-4"
-                onClick={sortByTitle}
-              >
+              <TableHead className="min-w-24 sm:min-w-48 text-xs sm:text-sm p-1 sm:p-4">
                 <div className="flex flex-row items-center">
                   Title
-                  <ArrowUpDown className="ml-1 h-3 w-3 sm:ml-2 sm:h-4 sm:w-4" />
+                  <SortButton
+                    onClick={() => {
+                      handleOnClick("title");
+                    }}
+                  >
+                    <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  </SortButton>
                 </div>
               </TableHead>
-              <TableHead
-                className="cursor-pointer w-14 sm:w-20 text-xs sm:text-sm p-1 sm:p-4"
-                onClick={sortByKcal}
-              >
+              <TableHead className="w-14 sm:w-20 text-xs sm:text-sm p-1 sm:p-4">
                 <div className="flex flex-row items-center justify-center">
-                  <span className="hidden sm:inline">Kcal</span>
-                  <span className="sm:hidden">Cal</span>
-                  <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  Kcal
+                  <SortButton
+                    onClick={() => {
+                      handleOnClick("kcal");
+                    }}
+                  >
+                    <ArrowUpDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
+                  </SortButton>
                 </div>
               </TableHead>
-              <TableHead className="hidden sm:table-cell min-w-32 text-xs sm:text-sm p-1 sm:p-4">
+              <TableHead className="min-w-32 text-xs sm:text-sm p-1 sm:p-4">
                 Tags
               </TableHead>
             </TableRow>
