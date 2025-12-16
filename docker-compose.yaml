@@ -1,0 +1,15 @@
+services:
+  webapp:
+    build: .
+    ports:
+      - 3000:3000
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 7780Mt20*
+      POSTGRES_DB: PlaygroundDb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
