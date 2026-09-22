@@ -4,11 +4,13 @@ services:
     ports:
       - 3000:3000
   db:
-    image: postgres:latest
+    image: postgres:17
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 7780Mt20*
-      POSTGRES_DB: PlaygroundDb
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-PlaygroundDb}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
